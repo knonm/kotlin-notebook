@@ -20,8 +20,12 @@ dev: PORT?=8888
 dev: ## Make a container from a tagged image image
 	docker run -it --rm -p $(PORT):8888 $(DARGS) $(REPO) $(ARGS)
 
+install-test-deps: ## Make a test environment by installing test dependencies with pip
+	pip install -r requirements-test.txt
+
+push: DARGS?=
+push: ## push all tags for a jupyter image
+	docker push $(DARGS) $(IMAGE):$(TAG)
+
 test: ## Make a test run against the latest image
 	pytest tests
-
-test-env: ## Make a test environment by installing test dependencies with pip
-	pip install -r requirements-test.txt
