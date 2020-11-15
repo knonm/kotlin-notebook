@@ -1,6 +1,7 @@
 # kotlin-notebook
 
-![CI](https://github.com/knonm/kotlin-notebook/workflows/CI/badge.svg)
+[![CI](https://github.com/knonm/kotlin-notebook/workflows/CI/badge.svg)](https://github.com/knonm/kotlin-notebook/actions?query=workflow%3ACI)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/knonm/kotlin-notebook/main)
 
 kotlin-notebook is a [Jupyter Docker Stack](https://github.com/jupyter/docker-stacks) image with the [Kotlin kernel for Jupyter/IPython](https://github.com/Kotlin/kotlin-jupyter).
 
