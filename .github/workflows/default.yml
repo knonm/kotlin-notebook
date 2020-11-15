@@ -1,4 +1,4 @@
-name: Build Docker Images
+name: Build Docker Image
 
 on:
   pull_request:
@@ -28,17 +28,15 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
-      - name: Install Dev Dependencies
-        run: make -C main install-test-deps
-      - name: Test Docker Images
-        run: make -C main test
-      - name: Build Docker Images
+      - name: Build Docker Image
         run: make -C main build
-      - name: Login to Docker Hub
+      - name: Install Dev Dependencies
+        run: make -C main test-env
+      - name: Test Docker Image
+        run: make -C main test
+      - name: Publish Docker Image
         if: github.ref == 'refs/heads/main'
         run: >
-          echo '${{secrets.DOCKERHUB_PASSWORD}}' | docker login --username
-          '${{secrets.DOCKERHUB_USERNAME}}' --password-stdin
-      - name: Push Images to DockerHub
-        if: github.ref == 'refs/heads/main'
-        run: make -C main push
+          make -C main push
+          DOCKERHUB_USERNAME="${{secrets.DOCKERHUB_USERNAME}}"
+          DOCKERHUB_PASSWORD="${{secrets.DOCKERHUB_PASSWORD}}"

@@ -17,15 +17,20 @@ build: ## Make the latest build of the image
 dev: ARGS?=
 dev: DARGS?=
 dev: PORT?=8888
-dev: ## Make a container from a tagged image image
-	docker run -it --rm -p $(PORT):8888 $(DARGS) $(REPO) $(ARGS)
+dev: build ## Make a container from a tagged image image
+	docker run -it --rm -p $(PORT):8888 $(DARGS) $(IMAGE):$(TAG) $(ARGS)
 
-install-test-deps: ## Make a test environment by installing test dependencies with pip
-	pip install -r requirements-test.txt
-
+push: DOCKERHUB_USERNAME?=
+push: DOCKERHUB_PASSWORD?=
 push: DARGS?=
+push: export GIT_SHA_TAG=$(shell git rev-parse --short=12 HEAD)
 push: ## push all tags for a jupyter image
-	docker push $(DARGS) $(IMAGE):$(TAG)
+	echo "$(DOCKERHUB_PASSWORD)" | docker login --username "$(DOCKERHUB_USERNAME)" --password-stdin
+	docker tag $(IMAGE) $(IMAGE):$(GIT_SHA_TAG)
+	docker push $(DARGS) $(IMAGE)
 
-test: ## Make a test run against the latest image
+test: test-env build ## Make a test run against the latest image
 	pytest tests
+
+test-env: ## Make a test environment by installing test dependencies with pip
+	pip install -r requirements-test.txt
