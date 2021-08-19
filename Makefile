@@ -27,7 +27,9 @@ push: export GIT_SHA_TAG=$(shell git rev-parse --short=12 HEAD)
 push: ## push all tags for a jupyter image
 	echo "$(DOCKERHUB_PASSWORD)" | docker login --username "$(DOCKERHUB_USERNAME)" --password-stdin
 	docker tag $(IMAGE) $(IMAGE):$(GIT_SHA_TAG)
-	docker push $(DARGS) $(IMAGE)
+	docker tag $(IMAGE) $(IMAGE):latest
+	docker push $(DARGS) $(IMAGE):$(GIT_SHA_TAG)
+	docker push $(DARGS) $(IMAGE):latest
 
 test: test-env build ## Make a test run against the latest image
 	pytest tests
