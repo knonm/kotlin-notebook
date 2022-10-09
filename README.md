@@ -21,7 +21,7 @@ docker run -it --rm \
   -p 8888:8888 \
   -e JUPYTER_ENABLE_LAB=yes \
   -e CHOWN_HOME=yes \
-  knonm/kotlin-notebook:latest
+  ghcr.io/knonm/kotlin-notebook:latest
 ```
 
 Then open http://localhost:8888 to try it out.
