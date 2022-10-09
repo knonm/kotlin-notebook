@@ -27,7 +27,7 @@ def docker_client():
 @pytest.fixture(scope='session')
 def image_name():
     """Image name to test"""
-    return 'knonm/kotlin-notebook'
+    return os.environ.get('PYTEST_IMAGE_NAME')
 
 
 class TrackedContainer(object):
