@@ -29,11 +29,8 @@ jobs:
       !contains(github.event.head_commit.message, 'ci skip') &&
       !contains(github.event.pull_request.title, 'ci skip')
     steps:
-      - name: Clone main repository
+      - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          path: ${{ env.MAIN_BRANCH }}
-          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
