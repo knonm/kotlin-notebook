@@ -41,7 +41,7 @@ jobs:
 
       - name: Test Docker image
         run: |
-          make -C main test
+          make test
           IMAGE_NAME=${{ env.IMAGE_NAME }}
           TAG=${{ env.LATEST_TAG }}
 
