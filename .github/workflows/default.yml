@@ -16,7 +16,6 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   LATEST_TAG: latest
-  MAIN_BRANCH: main
 
 jobs:
   build-test-publish:
@@ -46,7 +45,7 @@ jobs:
           TAG=${{ env.LATEST_TAG }}
 
       - name: Log in to the Container registry
-        if: github.ref == 'refs/heads/${{ env.MAIN_BRANCH }}'
+        if: github.ref == 'refs/heads/main'
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
@@ -54,7 +53,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
-        if: github.ref == 'refs/heads/${{ env.MAIN_BRANCH }}'
+        if: github.ref == 'refs/heads/main'
         id: meta
         uses: docker/metadata-action@v4
         with:
@@ -64,7 +63,7 @@ jobs:
             type=raw,value=${{ env.LATEST_TAG }}
 
       - name: Build and push Docker image
-        if: github.ref == 'refs/heads/${{ env.MAIN_BRANCH }}'
+        if: github.ref == 'refs/heads/main'
         uses: docker/build-push-action@v3
         with:
           context: .
