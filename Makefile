@@ -1,8 +1,8 @@
-.PHONY: help build dev test test-env
+.PHONY: help build run test test-env
 
 # Docker image name and tag
-IMAGE:=knonm/kotlin-notebook
-TAG?=latest
+DEFAULT_IMAGE_NAME:=knonm/kotlin-notebook
+DEFAULT_TAG?=dev
 # Shell that make should use
 SHELL:=bash
 
@@ -11,28 +11,31 @@ help:
 	@grep -E '^[a-zA-Z0-9_%/-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 build: DARGS?=
+build: IMAGE_NAME?=$(DEFAULT_IMAGE_NAME)
+build: TAG?=$(DEFAULT_TAG)
 build: ## Make the latest build of the image
-	docker build $(DARGS) --rm --force-rm -t $(IMAGE):$(TAG) .
+	docker build $(DARGS) --rm --force-rm -t $(IMAGE_NAME):$(TAG) .
 
 dev: ARGS?=
 dev: DARGS?=
 dev: PORT?=8888
+dev: IMAGE_NAME?=$(DEFAULT_IMAGE_NAME)
+dev: TAG?=$(DEFAULT_TAG)
 dev: build ## Make a container from a tagged image image
-	docker run -it --rm -p $(PORT):8888 $(DARGS) $(IMAGE):$(TAG) $(ARGS)
+	docker run -it --rm -p $(PORT):8888 $(DARGS) $(IMAGE_NAME):$(TAG) $(ARGS)
 
-push: DOCKERHUB_USERNAME?=
-push: DOCKERHUB_PASSWORD?=
-push: DARGS?=
-push: export GIT_SHA_TAG=$(shell git rev-parse --short=12 HEAD)
-push: ## push all tags for a jupyter image
-	echo "$(DOCKERHUB_PASSWORD)" | docker login --username "$(DOCKERHUB_USERNAME)" --password-stdin
-	docker tag $(IMAGE) $(IMAGE):$(GIT_SHA_TAG)
-	docker tag $(IMAGE) $(IMAGE):latest
-	docker push $(DARGS) $(IMAGE):$(GIT_SHA_TAG)
-	docker push $(DARGS) $(IMAGE):latest
+run: ARGS?=
+run: DARGS?=
+run: PORT?=8888
+run: IMAGE_NAME?=$(DEFAULT_IMAGE_NAME)
+run: TAG?=$(DEFAULT_TAG)
+run: build ## Make a container from a tagged image image
+	docker run -it --rm -p $(PORT):8888 $(DARGS) $(IMAGE_NAME):$(TAG) $(SHELL)
 
+test: IMAGE_NAME?=$(DEFAULT_IMAGE_NAME)
 test: test-env build ## Make a test run against the latest image
-	pytest tests
+	PYTEST_IMAGE_NAME='$(IMAGE_NAME)' python -m pytest tests
 
 test-env: ## Make a test environment by installing test dependencies with pip
-	pip install -r requirements-test.txt
+	python -m ensurepip --upgrade
+	python -m pip install -r requirements-test.txt
