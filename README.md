@@ -18,16 +18,16 @@ You can start using it straight out of the box with this "one"-liner:
 docker run -it --rm \
   --name kotlin_notebook \
   -v ${PWD}:/home/jovyan/workspace \
-  -p 8888:8888 \
+  -p 8080:8080 \
   -e JUPYTER_ENABLE_LAB=yes \
   -e CHOWN_HOME=yes \
   ghcr.io/knonm/kotlin-notebook:latest
 ```
 
-Then open http://localhost:8888 to try it out.
+Then open http://localhost:8080 to try it out.
 
 # Links
 
-- [Docker Hub repo](https://hub.docker.com/r/knonm/kotlin-notebook)
+- [Github Packages container registry](https://github.com/knonm/kotlin-notebook/pkgs/container/kotlin-notebook)
 - [jupyter/base-notebook](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-base-notebook)
 - [Kotlin Jupyter Demo](https://github.com/cheptsov/kotlin-jupyter-demo/blob/master/index.ipynb)
