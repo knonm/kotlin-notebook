@@ -18,13 +18,13 @@ You can start using it straight out of the box with this "one"-liner:
 docker run -it --rm \
   --name kotlin_notebook \
   -v ${PWD}:/home/jovyan/workspace \
-  -p 8080:8080 \
+  -p 8888:8888 \
   -e JUPYTER_ENABLE_LAB=yes \
   -e CHOWN_HOME=yes \
   ghcr.io/knonm/kotlin-notebook:latest
 ```
 
-Then open http://localhost:8080 to try it out.
+Then open http://localhost:8888 to try it out.
 
 # Links
 
