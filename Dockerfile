@@ -4,10 +4,10 @@ FROM jupyter/base-notebook:notebook-6.5.3
 # change file permissions, etc.
 USER root
 
-# Kotlin Jupyter requires Java 8 to be installed.
-# See https://github.com/cheptsov/kotlin-jupyter-demo/blob/master/index.ipynb
+# Kotlin Jupyter requires Java 11 to be installed.
+# See https://github.com/Kotlin/kotlin-jupyter/pull/394 and https://github.com/Kotlin/kotlin-jupyter/pull/394/commits/5ebb0b020fe8b9b2fb0173b3c1d2e45087f3f8bc
 RUN apt-get update \
-  && apt-get install -yq --no-install-recommends openjdk-8-jre
+  && apt-get install -yq --no-install-recommends openjdk-11-jre
 
 # If you do switch to root, always be sure to add a "USER $NB_USER" command at the end of the
 # file to ensure the image runs as a unprivileged user by default.
