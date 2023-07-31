@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook:notebook-6.5.4
+FROM jupyter/base-notebook:notebook-7.0.0
 
 # Add a "USER root" statement followed by RUN statements to install system packages using apt-get,
 # change file permissions, etc.
