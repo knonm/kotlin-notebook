@@ -15,4 +15,6 @@ USER $NB_UID
 
 ENV JUPYTER_ENABLE_LAB=yes
 
-RUN conda install -c jetbrains kotlin-jupyter-kernel
+COPY requirements.txt .
+
+RUN pip install kotlin-jupyter-kernel -r requirements.txt
