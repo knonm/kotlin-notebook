@@ -29,10 +29,10 @@ jobs:
       !contains(github.event.pull_request.title, 'ci skip')
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.x
           cache: 'pip'
@@ -54,7 +54,7 @@ jobs:
 
       - name: Log in to the Container registry
         if: github.ref == 'refs/heads/main'
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
@@ -63,7 +63,7 @@ jobs:
       - name: Extract metadata (tags, labels) for Docker
         if: github.ref == 'refs/heads/main'
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
