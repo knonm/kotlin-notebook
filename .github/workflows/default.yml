@@ -45,9 +45,11 @@ jobs:
           TAG=${{ env.LATEST_TAG }}
 
       - name: Set up QEMU
+        if: github.ref == 'refs/heads/main'
         uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
+        if: github.ref == 'refs/heads/main'
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to the Container registry
