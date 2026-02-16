@@ -1,1 +1,1 @@
-kotlin-jupyter-kernel==0.15.0.598
+kotlin-jupyter-kernel==0.18.0.850
